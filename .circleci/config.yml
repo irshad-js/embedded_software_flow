@@ -32,7 +32,10 @@ jobs:
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
-          command: python3 Python_based_modelling/python_proof_of_concept.py NON_GUI_SIM
+          command: |
+            python3 Python_based_modelling/python_proof_of_concept.py NON_GUI_SIM
+            echo "first"
+            echo "last"
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
