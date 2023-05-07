@@ -4,6 +4,7 @@ intended for simulation and state model verification
 """
 from enum import Enum
 import time
+import sys
 
 
 class Door_position(Enum):
@@ -36,7 +37,7 @@ class Signals(Enum):
 
 
 class MainStateObject:
-    """Main state object to hold elements, states and signals in memory"""
+    """Main state object to hold elements, states in memory"""
 
     def __init__(self):
         self.current_state = State.DISPLAY_WATTAGE_STATE
@@ -60,6 +61,18 @@ def update_timer(state_object, signal_object):
 
 
 def statemachine_handler(state_object, signal_object):
+    """This is the main handler function that
+    takes care of the state transition and the
+    logic that has to be handled in the different states
+
+
+    Args:
+        state_object (MainObject type): An object created using
+        the MainObject type to store state information and other
+        information to be retained during operation
+        signal_object (Signal Enum): The different combinations
+        of the signal available to be processed
+    """
     if state_object.current_state == State.DISPLAY_MW_TIMER:
         print("Current state - Displaying Microwave timer")
         if (
@@ -158,22 +171,24 @@ def execute_state_functionalities(state_obj, signals):
 
 
 def main():
-    """Main entry point of the app"""
+    """Start of the model"""
     main_object = MainStateObject()
-    recorded_signals = [
-        Signals.START_BUTTON,
-        Signals.UP_BUTTON,
-        Signals.UP_BUTTON,
-        Signals.UP_BUTTON,
-        Signals.START_BUTTON,
-        Signals.TICK,
-    ]
-    for signals in recorded_signals:
-        execute_state_functionalities(main_object, signals)
-    while True:
-        execute_state_functionalities(main_object, Signals.TICK)
+    list_of_arguments_passed_in = sys.argv
+    if list_of_arguments_passed_in[1] == "NON_GUI_SIM":
+        recorded_signals = [
+            Signals.START_BUTTON,
+            Signals.UP_BUTTON,
+            Signals.UP_BUTTON,
+            Signals.UP_BUTTON,
+            Signals.START_BUTTON,
+            Signals.TICK,
+        ]
+        for signals in recorded_signals:
+            execute_state_functionalities(main_object, signals)
+        for _ in range(0, 200):
+            execute_state_functionalities(main_object, Signals.TICK)
+    return 0
 
 
 if __name__ == "__main__":
-    """This is executed when run from the command line"""
     main()
