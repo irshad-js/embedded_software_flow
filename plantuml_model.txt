@@ -1,0 +1,67 @@
+@startuml
+skinparam backgroundColor lightyellow
+skinparam state {
+  StartColor MediumBlue
+  EndColor Red
+  BackgroundColor lightgray
+  BackgroundColor<<Warning>> Olive
+  BorderColor Gray
+  FontName Impact
+}
+
+
+state "Microwave state" as MW{
+
+state "Check MW door closed" as CDM
+state "Display MW timer" as DTM
+state "Set MW timer" as STM
+state "Activate magnetron" as AMG
+state "Display wattage state" as DW
+state "Set wattage state" as SW
+state "Paused state" as PS
+
+[*] --> DW
+DW --> STM: start
+DW --> SW:up/down/rotary_knob
+SW --> DTM: start
+SW --> SW:up/down/rotary_knob
+DTM --> STM: up/down/rotary_knob
+STM --> STM: up/down/rotary_knob
+STM --> CDM: start
+CDM --> AMG: magnetron_ready
+AMG --> CDM: door_opened
+AMG --> PS: start
+PS --> CDM: start
+CDM --> CDM: door_opened
+}
+[*] --> MW: Menu_button
+
+
+state "Grill state" as GM{
+
+state "Check GL door closed" as CDGL
+state "Display Grill timer" as DTGL
+state "Set Grill timer" as STGL
+state "Activate heating element" as AGL
+state "Display temperature state" as DTMP
+state "Set temperature state" as STMP
+state "Paused state" as PSGL
+
+[*] --> DTMP
+DTMP --> STMP: up/down/rotary_knob
+STMP --> DTGL: start
+DTGL --> STGL: up/down/rotary_knob
+STGL --> CDGL: start
+CDGL --> CDGL: door_opened
+CDGL --> AGL: heating_coil_ready
+AGL --> CDGL: door_opened
+CDGL --> PSGL: start
+PSGL --> CDGL: start
+
+}
+MW --> GM: Menu_button
+GM --> MW: Menu_button
+MW --> [*]: Cooking_complete
+GM --> [*]: Cooking_complete
+@enduml
+
