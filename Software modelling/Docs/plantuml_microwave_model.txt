@@ -10,6 +10,7 @@ skinparam state {
 }
 
 
+
 state "Microwave state" as MW{
 
 state "Check MW door closed" as CDM
@@ -21,14 +22,14 @@ state "Set wattage state" as SW
 state "Paused state" as PS
 
 [*] --> DW
-DW --> STM: start
+DW --> DTM: start
 DW --> SW:up/down/rotary_knob
 SW --> DTM: start
 SW --> SW:up/down/rotary_knob
 DTM --> STM: up/down/rotary_knob
 STM --> STM: up/down/rotary_knob
 STM --> CDM: start
-CDM --> AMG: magnetron_ready
+CDM --> AMG: Tick[isdoorclosed]
 AMG --> CDM: door_opened
 AMG --> PS: start
 PS --> CDM: start
@@ -39,7 +40,7 @@ CDM --> CDM: door_opened
 
 state "Grill state" as GM{
 
-state "Check GL door closed" as CDGL
+state "Check Grill door closed" as CDGL
 state "Display Grill timer" as DTGL
 state "Set Grill timer" as STGL
 state "Activate heating element" as AGL
@@ -48,20 +49,25 @@ state "Set temperature state" as STMP
 state "Paused state" as PSGL
 
 [*] --> DTMP
+DTMP --> MW: Menu_button
+DTMP --> DTGL: start
 DTMP --> STMP: up/down/rotary_knob
+STMP --> STMP: up/down/rotary_knob
 STMP --> DTGL: start
 DTGL --> STGL: up/down/rotary_knob
+STGL --> STGL: up/down/rotary_knob
 STGL --> CDGL: start
 CDGL --> CDGL: door_opened
-CDGL --> AGL: heating_coil_ready
+CDGL --> AGL: Tick[isdoorclosed]
 AGL --> CDGL: door_opened
-CDGL --> PSGL: start
+AGL --> PSGL: start
 PSGL --> CDGL: start
 
 }
-MW --> GM: Menu_button
-GM --> MW: Menu_button
-MW --> [*]: Cooking_complete
-GM --> [*]: Cooking_complete
-@enduml
 
+
+DW --> GM: Menu_button
+AGL --> notification: Cooking_complete
+AMG --> notification: Cooking_complete
+notification --> [*]: start/up/down/rotary_knob/menu
+@enduml

@@ -6,9 +6,10 @@ RUN \
 	apt-get install -y python3 && \
 	apt-get install -y build-essential && \
 	apt-get install -y plantuml && \
+	apt-get install -y wget && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y gdb
 	
-WORKDIR /usr/base_application_home/
+WORKDIR /usr/app/
 
 
 # First, crate the image like so: docker build -t software_workflow .
@@ -18,3 +19,4 @@ WORKDIR /usr/base_application_home/
 # docker restart custom_image
 # The %cd% is focused on windows cmd
 
+# New docker builds for incremental image updates are like so: docker build -t irshadjs/software_workflow:0.2 .

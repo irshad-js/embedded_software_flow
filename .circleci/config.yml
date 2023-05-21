@@ -21,7 +21,7 @@ jobs:
     # The executor is the environment in which the steps below will be executed - below will use a python 3.10.2 container
     # Change the version below to your required version of python
     docker:
-      - image: irshadjs/software_workflow:0.1
+      - image: irshadjs/software_workflow:0.2
     # Checkout the code as the first step. This is a dedicated CircleCI step.
     # The python orb's install-packages step will install the dependencies from a Pipfile via Pipenv by default.
     # Here we're making sure we use just use the system-wide pip. By default it uses the project root's requirements.txt.
@@ -33,9 +33,15 @@ jobs:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command: |
-            python3 Python_based_modelling/python_proof_of_concept.py NON_GUI_SIM
-            echo "first"
-            echo "last"
+            NOCOLOR='\033[0m'
+            custom_color='\x1b[33;41;1m'
+            printf "${custom_color}This is the circle ci pipeline execution ${NOCOLOR}\n\n"
+            printf "${custom_color}Step 1: Simulate the python model with microwave stimuli${NOCOLOR}\n\n"
+            python3 Software\ modelling/python_model.py NON_GUI Software\ modelling/simulate_mw_operation_simple.json
+            printf "${custom_color}Step 2: Simulate the python model with grill stimuli${NOCOLOR}\n\n"
+            python3 Software\ modelling/python_model.py NON_GUI Software\ modelling/simulate_grill_operation_simple.json
+            printf "${custom_color}Steps complete${NOCOLOR}\n\n"
+            
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
