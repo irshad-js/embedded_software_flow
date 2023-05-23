@@ -1,0 +1,5 @@
+add_executable(Test_app main.cpp unit_1.cpp)
+
+target_link_libraries(Test_app PUBLIC
+CppUTest::CppUTest
+)

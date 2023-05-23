@@ -7,6 +7,8 @@ RUN \
 	apt-get install -y build-essential && \
 	apt-get install -y plantuml && \
 	apt-get install -y wget && \
+	apt-get install -y git && \
+	apt-get install -y cmake && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y gdb
 	
 WORKDIR /usr/app/
