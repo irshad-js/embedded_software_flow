@@ -1,5 +1,18 @@
-add_executable(Test_app main.cpp unit_1.cpp)
+set(
+    Test_source
+    test_main.cpp
+    chapter2_test_sprintf.cpp
+    chapter3_test_led_driver.cpp
+    chapter4_test_led_driver_continued.cpp
+)
 
-target_link_libraries(Test_app PUBLIC
-CppUTest::CppUTest
+add_executable(
+    Test_app 
+    ${Test_source}
+)
+
+target_link_libraries(
+    Test_app PUBLIC
+    application_library
+    CppUTest::CppUTest
 )

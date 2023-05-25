@@ -16,4 +16,5 @@ FetchContent_Declare(
 	)
 
 FetchContent_MakeAvailable(CppUTest)
+add_subdirectory(Application)
 add_subdirectory(Source)
