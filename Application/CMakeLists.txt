@@ -12,4 +12,5 @@ add_library(
 target_include_directories(
     application_library PUBLIC
     ${CMAKE_SOURCE_DIR}/Application
+    ${CMAKE_SOURCE_DIR}/Source
 )
