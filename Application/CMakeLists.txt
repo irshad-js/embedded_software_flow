@@ -8,6 +8,13 @@ set(
     TimeService.h
     RandomMinute.h
     RandomMinute.c
+    Flash.c
+    Flash.h
+    IO_read.cpp
+    IO_read.h
+    IO_write.c
+    IO_write.h
+
 )
 
 add_library(

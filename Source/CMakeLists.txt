@@ -16,6 +16,7 @@ set(
     FakeTimeService_test.cpp
     Fakerandom_minute.c
     Fakerandom_minute.h
+    chapter10_mock_based_testing.cpp
 )
 
 add_executable(
@@ -33,4 +34,5 @@ target_link_libraries(
     Test_app PUBLIC
     application_library
     CppUTest::CppUTest
+    CppUTest::CppUTestExt
 )
