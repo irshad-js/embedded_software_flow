@@ -2,6 +2,12 @@ set(
     App_source
     chapter3_led_driver.c
     chapter3_led_driver.h
+    chapter8_lightscheduler.h
+    chapter8_lightscheduler.c
+    LightController.h
+    TimeService.h
+    RandomMinute.h
+    RandomMinute.c
 )
 
 add_library(
